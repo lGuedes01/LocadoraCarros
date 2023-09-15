@@ -1,9 +1,17 @@
-// bah
-
 #include <stdio.h>
+
+
+#include "clientes.h"
+#include "veiculos.h"
+#include "locacoes.h"
+
 
 int main()
 {
-    printf("Hello World!");
+      
+    inicializa_programa();
+    menu();
+    finaliza_programa();
+
     return 0;
 }
