@@ -7,8 +7,12 @@ int main()
 {
     lista_veiculo* veiculos;
     veiculos = cria_lista_veic();
-    veiculos = add_veic(veiculos);
-    imprime_veic(veiculos);
+    for (int i = 0; i < 3; i++)
+    {
+        veiculos = add_veic(veiculos);
+    }
+    top3MaisRodados(veiculos);
+    // imprime_veic(veiculos);
     system("pause");
     return 0;
 }
