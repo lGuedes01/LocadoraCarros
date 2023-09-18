@@ -23,13 +23,12 @@ struct ListaVeiculo
 };
 typedef struct ListaVeiculo lista_veiculo;
 
-
-
 lista_veiculo *cria_lista_veic();
 lista_veiculo *aloca_veic();
 lista_veiculo *pega_info_veic(lista_veiculo *veiculo);
 lista_veiculo *ultimo(lista_veiculo *list_veic);
 lista_veiculo *add_veic(lista_veiculo *list_veic);
 void imprime_veic(lista_veiculo *list_veic);
+void top3MaisRodados(lista_veiculo *list_veic);
 
 #endif

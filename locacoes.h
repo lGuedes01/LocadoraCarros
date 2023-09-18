@@ -6,14 +6,13 @@
 #include "clientes.h"
 #include "veiculos.h"
 
-
-struct date 
+struct Date
 {
     int day;
     int month;
     int year;
 };
-typedef struct date Date
+typedef struct Date Date;
 
 struct locacao
 {
@@ -22,17 +21,15 @@ struct locacao
     float valor_pago;
     struct Date *data_retirada;
     struct Date *data_devolucao;
-}
-
+};
+typedef struct locacao Locacao;
 
 struct listaLocacao
 {
-    struct ListaLocacao *ant;
-    struct ListaLocacao *prox;
-    
+    Locacao *locacao_cliente;
+    struct listaLocacao *ant;
+    struct listaLocacao *prox;
 };
 typedef struct listaLocacao ListaLocacao;
-
-
 
 #endif

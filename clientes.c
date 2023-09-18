@@ -2,9 +2,9 @@
 #include "clientes.h"
 #include "veiculos.h"
 #include "locacoes.h"
+#include <stdlib.h>
 
 #include <stdio.h>
-
 
 lista_cliente *cria_lista_clientes()
 {
@@ -13,16 +13,15 @@ lista_cliente *cria_lista_clientes()
 
 lista_cliente *aloca_lista_clientes()
 {
-   
-    lista_cliente *cliente = (lista_cliente *)malloc(sizeof(lista_cliente)); 
+
+    lista_cliente *cliente = (lista_cliente *)malloc(sizeof(lista_cliente));
 
     return cliente;
 }
 
-
-lista_cliente add_cliente(lista_cliente* client)
+lista_cliente add_cliente(lista_cliente *client)
 {
-    dadosClientes *dados = (dadosClientes*)malloc(sizeof(dadosClientes));
+    dadosClientes *dados = (dadosClientes *)malloc(sizeof(dadosClientes));
     lista_cliente *novo_cliente = aloca_lista_clientes();
 
     dados = pega_info_clientes(dados);
@@ -31,7 +30,7 @@ lista_cliente add_cliente(lista_cliente* client)
     novo_cliente->ant = NULL;
     novo_cliente->prox = client;
 
-    if (client != NULL) 
+    if (client != NULL)
     {
         client->ant = novo_cliente;
     }
@@ -56,7 +55,7 @@ void imprimir_clientes(lista_cliente *lista_cli)
 {
     lista_cliente *cliente;
     int i;
-    for (cliente = lista_cli, i = 1; p != NULL; cliente = cliente->prox, i ++)
+    for (cliente = lista_cli, i = 1; p != NULL; cliente = cliente->prox, i++)
     {
         printf("Cliente %d:\n", i);
         printf("\tNome: %s\n\tCNH: %s\n\tNúmero de Telefone: %s\n\tano de fabricacao: %s\n", cliente->dados->nome, cliente->dados->cnh, cliente->dados->numero);
