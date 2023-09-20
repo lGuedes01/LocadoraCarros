@@ -14,43 +14,40 @@ lista_cliente *cria_lista_clientes()
 lista_cliente *aloca_lista_clientes()
 {
 
-    lista_cliente *cliente = (lista_cliente *)malloc(sizeof(lista_cliente));
-
+    lista_cliente *cliente;
+    cliente = (lista_cliente *)malloc(sizeof(lista_cliente));
     return cliente;
 }
 
-lista_cliente* add_cliente(lista_cliente *client)
+lista_cliente *pega_info_clientes(lista_cliente* cliente)
+{
+    cliente->dados.nome = (char *)malloc(20 * sizeof(char));
+    printf("Nome: ");
+    scanf(" %[^\n]s", cliente->dados.nome);
+    cliente->dados.cnh = (char *)malloc(20 * sizeof(char));
+    printf("CNH: ");
+    scanf(" %[^\n]s", cliente->dados.cnh);
+    cliente->dados.numero = (char *)malloc(20 * sizeof(char));
+    printf("Numero de Telefone: ");
+    scanf(" %[^\n]s", cliente->dados.numero);
+    return cliente;
+}
+
+lista_cliente* add_cliente(lista_cliente *list_client)
 {
 
     printf("CRIANDO CLIENTE:\n");
-    dadosClientes *dados = (dadosClientes *)malloc(sizeof(dadosClientes));
-    lista_cliente *novo_cliente = aloca_lista_clientes();
-
-    dados = pega_info_clientes(dados);
-
-    novo_cliente->dados = dados;
+    lista_cliente *novo_cliente;
+    novo_cliente = aloca_lista_clientes();
+    novo_cliente = pega_info_clientes(novo_cliente);
     novo_cliente->ant = NULL;
-    novo_cliente->prox = client;
-
-    if (client != NULL)
+    novo_cliente->prox = list_client;
+    if (list_client != NULL)
     {
-        client->ant = novo_cliente;
+        list_client->ant = novo_cliente;
     }
 
     return novo_cliente;
-}
-
-dadosClientes *pega_info_clientes(dadosClientes *dados)
-{
-    dados->nome = (char *)malloc(20 * sizeof(char));
-    printf("Nome: ");
-    scanf(" %[^\n]s", &dados->nome);
-    dados->nome = (char *)malloc(20 * sizeof(char));
-    printf("CNH: ");
-    scanf(" %[^\n]s", &dados->cnh);
-    dados->nome = (char *)malloc(20 * sizeof(char));
-    printf("Número de Telefone: ");
-    scanf(" %[^\n]s", &dados->numero);
 }
 
 void imprimir_clientes(lista_cliente *lista_cli)
@@ -60,6 +57,12 @@ void imprimir_clientes(lista_cliente *lista_cli)
     for (cliente = lista_cli, i = 1; cliente != NULL; cliente = cliente->prox, i++)
     {
         printf("Cliente %d:\n", i);
-        printf("\tNome: %s\n\tCNH: %s\n\tNúmero de Telefone: %s\n\tano de fabricacao: %s\n", cliente->dados->nome, cliente->dados->cnh, cliente->dados->numero);
+        imprimir_cliente(cliente->dados);
     }
+}
+
+void imprimir_cliente(dadosClientes cliente)
+{
+    printf("\tNome: %s\n\tCNH: %s\n\tNumero de Telefone: %s\n", cliente.nome,
+        cliente.cnh, cliente.numero);
 }

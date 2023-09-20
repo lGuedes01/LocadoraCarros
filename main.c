@@ -13,7 +13,7 @@ int main()
     ListaLocacao *lista_loc = cria_lista_locacao();
     Date data_atual = pega_data("atual");
     menu(lista_cl, lista_veic, lista_loc, data_atual);
-    finaliza_programa();
+    //finaliza_programa();
 
     return 0;
 }

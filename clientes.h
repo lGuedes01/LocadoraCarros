@@ -15,7 +15,7 @@ struct ListaCliente
 {
     struct ListaCliente *ant;
     struct ListaCliente *prox;
-    dadosClientes *dados;
+    dadosClientes dados;
 };
 typedef struct ListaCliente lista_cliente;
 
@@ -23,7 +23,8 @@ typedef struct ListaCliente lista_cliente;
 lista_cliente *cria_lista_clientes();
 lista_cliente *aloca_lista_clientes();
 lista_cliente *add_cliente(lista_cliente *client);
-dadosClientes *pega_info_clientes(dadosClientes *dados);
+lista_cliente *pega_info_clientes(lista_cliente *cliente);
 void imprimir_clientes(lista_cliente *lista_cli);
+void imprimir_cliente(dadosClientes cliente);
 
 #endif

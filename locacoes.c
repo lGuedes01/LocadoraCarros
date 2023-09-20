@@ -15,7 +15,6 @@ ListaLocacao *aloca_lista_locacao()
 {
     ListaLocacao *locacao;
     locacao = (ListaLocacao *)malloc(sizeof(ListaLocacao));
-
     return locacao;
 }
 
@@ -66,14 +65,13 @@ void imprime_info_locacao_veic(lista_veiculo *list_veic)
 }
 lista_cliente *pega_cliente(lista_cliente *lista_clientes)
 {
-    char nome_cliente[20];
+    char *nome_cliente;
+    nome_cliente = (char*)malloc(20*sizeof(char));
     printf("Informe o CNH do cliente: ");
     scanf(" %[^\n]s, ",nome_cliente);
-    lista_cliente *l = aloca_lista_clintes();
-
-    for (l = lista_clientes->prox; l != NULL; l = l->prox)
+    for (lista_cliente *l = lista_clientes; l != NULL; l = l->prox)
     {
-        if (strcmp(nome_cliente, l->dados->cnh) == 0)
+        if (strcmp(nome_cliente, l->dados.cnh) == 0)
         {
             return l;
         }
@@ -83,11 +81,11 @@ lista_cliente *pega_cliente(lista_cliente *lista_clientes)
 
 lista_veiculo *pega_veiculo(lista_veiculo *veiculos)
 {
-    char placa_veiculo[10];
+    char* placa_veiculo;
+    placa_veiculo = (char*)malloc(20*sizeof(char));
     printf("Informe a placa do veículo: ");
-    scanf(" %[^\n]s, ",placa_veiculo);
-    lista_veiculo *l = aloca_veic();
-    for (l = veiculos->prox; l != NULL; l = l->prox)
+    scanf(" %[^\n]s, ", placa_veiculo);
+    for (lista_veiculo *l = veiculos; l != NULL; l = l->prox)
     {
         if (strcmp(placa_veiculo, l->veic.placa) == 0)
         {
@@ -97,12 +95,14 @@ lista_veiculo *pega_veiculo(lista_veiculo *veiculos)
     return NULL;
 }
 
-ListaLocacao *pega_informacao_locacao(lista_cliente *lista_clientes, lista_veiculo *lista_veic)
+ListaLocacao *pega_informacao_locacao(ListaLocacao *locacao_a_realizar,lista_cliente *lista_clientes, lista_veiculo *lista_veic)
 {
     lista_cliente *cliente = pega_cliente(lista_clientes);
     if(cliente == NULL)
         lista_clientes = add_cliente(lista_clientes);
-    lista_veiculo *veiculo = pega_veiculo(lista_veic);
+    lista_veiculo *veiculo;
+    veiculo = aloca_veic();
+    veiculo = pega_veiculo(lista_veic);
 
     if (veiculo == NULL || !veiculo->veic.disponivel)
     {
@@ -111,7 +111,6 @@ ListaLocacao *pega_informacao_locacao(lista_cliente *lista_clientes, lista_veicu
     }
     else
     {
-        ListaLocacao *locacao_a_realizar = aloca_lista_locacao();
         locacao_a_realizar->locacao_cliente->cl = cliente;
         locacao_a_realizar->locacao_cliente->vc = veiculo;
         return locacao_a_realizar;
@@ -131,7 +130,7 @@ void locacoes_ativas(ListaLocacao *lista_locacoes, Date data_atual)
     {
         if (locacaoAtiva(locacao->locacao_cliente, data_atual))
         {
-            printf("Cliente: %s\n", locacao->locacao_cliente->cl->dados->nome);
+            printf("Cliente: %s\n", locacao->locacao_cliente->cl->dados.nome);
             printf("Veículo: %s\n", locacao->locacao_cliente->vc->veic.modelo);
             printf("Data de Retirada: %d/%d/%d\n", locacao->locacao_cliente->data_retirada.day,
                    locacao->locacao_cliente->data_retirada.month, locacao->locacao_cliente->data_retirada.year);
@@ -148,24 +147,23 @@ ListaLocacao *locar_veiculo(ListaLocacao *l, ListaLocacao *lista_locacao, Date d
         printf("Falha ao realizar a locacao!\n");
         return lista_locacao;
     }
+    //l->locacao_cliente = (Locacao*)malloc(sizeof(Locacao));
     l->locacao_cliente->data_retirada = data_atual;
-    l->locacao_cliente->data_devolucao = pega_data("de devolução");
-    l->ant == NULL;
+    l->locacao_cliente->data_devolucao = pega_data("de devolucao"); // 
+    l->ant = NULL;
     l->prox = lista_locacao;
     lista_locacao->ant = l;
-
     return l;
 }
 
 
-// so pode alocar o veiculo caso ele esteja disponível na data solicitada
-//primeiro verifica se ta disponível
-//depois verifica se a data eh maior que a data de devolução
 ListaLocacao *realizar_locacao(lista_veiculo *lista_veic, lista_cliente *lista_cli, ListaLocacao *lista_locacao, Date data_atual)
 {
     imprime_info_locacao_veic(lista_veic);
 
-    ListaLocacao *l = pega_informacao_locacao(lista_cli, lista_veic);
+    ListaLocacao *l;
+    l = aloca_lista_locacao();
+    l = pega_informacao_locacao(l,lista_cli, lista_veic);
 
     lista_locacao = locar_veiculo(l, lista_locacao, data_atual);
 
@@ -179,7 +177,7 @@ void listarVeicDisp(lista_veiculo *veic)
     {
         if (p->veic.disponivel == true)
         {
-            printf("modelo: %s\nplaca: %s\n", p->veic.modelo, p->veic.placa);
+            printf("Modelo: %s\nPlaca: %s\n", p->veic.modelo, p->veic.placa);
         }
     }
 }
@@ -253,7 +251,7 @@ void listar_locacoes(ListaLocacao *lista_locacoes)
 
     for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
-        printf("Cliente: %s\n", locacao->locacao_cliente->cl->dados->nome);
+        printf("Cliente: %s\n", locacao->locacao_cliente->cl->dados.nome);
         printf("Veículo: %s\n", locacao->locacao_cliente->vc->veic.modelo);
         printf("Data de Retirada: %d/%d/%d\n", locacao->locacao_cliente->data_retirada.day,
                locacao->locacao_cliente->data_retirada.month, locacao->locacao_cliente->data_retirada.year);
@@ -264,4 +262,30 @@ void listar_locacoes(ListaLocacao *lista_locacoes)
     }
 }
 
+void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes)
+{
+    lista_cliente* cliente;
+    cliente = pega_cliente(cliente);
 
+    for (ListaLocacao* l = lista_locacoes ; l!=NULL ; l = l->prox )
+    {
+        if (l->locacao_cliente->cl = cliente)
+        {
+            imprimir_cliente(l->locacao_cliente->cl->dados);
+            imprime_veic(l->locacao_cliente->vc->veic);
+            printf("Data de Retirada: %d/%d/%d\n", l->locacao_cliente->data_retirada.day,
+               l->locacao_cliente->data_retirada.month, l->locacao_cliente->data_retirada.year);
+            printf("Data de Devolução: %d/%d/%d\n", l->locacao_cliente->data_devolucao.day,
+               l->locacao_cliente->data_devolucao.month, l->locacao_cliente->data_devolucao.year);
+            printf("Valor pago: %f\n", l->locacao_cliente->valor_pago);
+        }
+        
+    }
+    
+}
+
+
+float faturamento_mensal(ListaLocacao *lista_locacoes)
+{
+    
+}
