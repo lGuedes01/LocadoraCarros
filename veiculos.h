@@ -17,7 +17,6 @@ typedef struct DadosVeiculo dadosVeiculo;
 
 struct ListaVeiculo
 {
-    struct ListaVeiculo *ant;
     struct ListaVeiculo *prox;
     dadosVeiculo veic;
 };

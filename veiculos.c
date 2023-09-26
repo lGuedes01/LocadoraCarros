@@ -38,14 +38,13 @@ lista_veiculo *pega_info_veic(lista_veiculo *veiculo)
 
 lista_veiculo *add_veic(lista_veiculo *list_veic)
 {
+    printf("ADICIONANDO VEICULO: \n");
     lista_veiculo *novo_veic;
     novo_veic = aloca_veic();
     novo_veic = pega_info_veic(novo_veic);
-    novo_veic->ant = NULL;
     novo_veic->prox = list_veic;
-    if (list_veic != NULL)
-        list_veic->ant = novo_veic;
-    return novo_veic;
+    list_veic = novo_veic;
+    return list_veic;
 }
 
 void imprime_veiculos(lista_veiculo *list_veic)

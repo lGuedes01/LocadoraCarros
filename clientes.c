@@ -40,14 +40,9 @@ lista_cliente* add_cliente(lista_cliente *list_client)
     lista_cliente *novo_cliente;
     novo_cliente = aloca_lista_clientes();
     novo_cliente = pega_info_clientes(novo_cliente);
-    novo_cliente->ant = NULL;
     novo_cliente->prox = list_client;
-    if (list_client != NULL)
-    {
-        list_client->ant = novo_cliente;
-    }
-
-    return novo_cliente;
+    list_client = novo_cliente;
+    return list_client;
 }
 
 void imprimir_clientes(lista_cliente *lista_cli)

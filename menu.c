@@ -2,6 +2,7 @@
 #include "clientes.h"
 #include "veiculos.h"
 #include "locacoes.h"
+#include "menu.h"
 
 void imprime_menu()
 {
@@ -23,7 +24,7 @@ void imprime_menu()
 int pega_opcao()
 {
     int opcao;
-    printf("Digite a opcao que deseja acessar!");
+    printf("Digite a opcao que deseja acessar: ");
     do
     {
         scanf("%d", &opcao);

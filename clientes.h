@@ -13,7 +13,6 @@ typedef struct DadosClientes dadosClientes;
 
 struct ListaCliente
 {
-    struct ListaCliente *ant;
     struct ListaCliente *prox;
     dadosClientes dados;
 };
