@@ -21,13 +21,10 @@ lista_cliente *aloca_lista_clientes()
 
 lista_cliente *pega_info_clientes(lista_cliente* cliente)
 {
-    cliente->dados.nome = (char *)malloc(20 * sizeof(char));
     printf("Nome: ");
     scanf(" %[^\n]s", cliente->dados.nome);
-    cliente->dados.cnh = (char *)malloc(20 * sizeof(char));
     printf("CNH: ");
     scanf(" %[^\n]s", cliente->dados.cnh);
-    cliente->dados.numero = (char *)malloc(20 * sizeof(char));
     printf("Numero de Telefone: ");
     scanf(" %[^\n]s", cliente->dados.numero);
     return cliente;

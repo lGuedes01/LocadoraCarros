@@ -5,10 +5,10 @@
 
 struct DadosVeiculo
 {
-    char *placa;
-    char *marca;
-    char *modelo;
-    char *ano_de_fab;
+    char placa[10];
+    char marca[20];
+    char modelo[20];
+    int ano_de_fab;
     int km_atual;
     float preco_diaria;
     bool disponivel;

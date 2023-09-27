@@ -5,9 +5,9 @@
 
 struct DadosClientes
 {
-    char *nome;
-    char *cnh;
-    char *numero;
+    char nome[20];
+    char cnh[20];
+    char numero[20];
 };
 typedef struct DadosClientes dadosClientes;
 

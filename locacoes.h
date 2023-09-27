@@ -26,7 +26,7 @@ typedef struct locacao Locacao;
 
 struct listaLocacao
 {
-    Locacao* locacao_cliente;
+    Locacao locacao_cliente;
     struct listaLocacao *prox;
 };
 typedef struct listaLocacao ListaLocacao;
@@ -38,7 +38,7 @@ void imprime_info_locacao_veic(lista_veiculo *list_veic);
 lista_cliente *cliente_desejado(lista_cliente *lista_clientes);
 lista_veiculo *veiculo_desejado(lista_veiculo *veiculos);
 ListaLocacao *pega_informacao_locacao(ListaLocacao *locacao_a_realizar, lista_veiculo *lista_veic, lista_cliente *lista_clientes, Date data_atual);
-bool locacaoAtiva(Locacao* locacao);
+bool locacaoAtiva(Locacao locacao);
 void locacoes_ativas(ListaLocacao *lista_locacoes);
 ListaLocacao *realizar_locacao(lista_veiculo *lista_veic, lista_cliente *lista_cli, ListaLocacao *lista_locacao, Date data_atual);
 void listarVeicDisp(lista_veiculo *veic);

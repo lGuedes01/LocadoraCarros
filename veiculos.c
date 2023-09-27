@@ -16,16 +16,12 @@ lista_veiculo *aloca_veic()
 
 lista_veiculo *pega_info_veic(lista_veiculo *veiculo)
 {
-    veiculo->veic.marca = (char *)malloc(20 * sizeof(char));
     printf("Marca:");
     scanf(" %[^\n]s", veiculo->veic.marca);
-    veiculo->veic.modelo = (char *)malloc(20 * sizeof(char));
     printf("Modelo:");
     scanf(" %[^\n]s", veiculo->veic.modelo);
-    veiculo->veic.ano_de_fab = (char *)malloc(20 * sizeof(char));
     printf("Ano de fabricacao:");
-    scanf(" %[^\n]s", veiculo->veic.ano_de_fab);
-    veiculo->veic.placa = (char *)malloc(20 * sizeof(char));
+    scanf("%d", &veiculo->veic.ano_de_fab);
     printf("Placa:");
     scanf(" %[^\n]s", veiculo->veic.placa);
     printf("KMs rodados:");
@@ -40,7 +36,7 @@ lista_veiculo *add_veic(lista_veiculo *list_veic)
 {
     printf("ADICIONANDO VEICULO: \n");
     lista_veiculo *novo_veic;
-    novo_veic = (lista_veiculo *)malloc(sizeof(lista_veiculo));
+    novo_veic = aloca_veic();
     novo_veic = pega_info_veic(novo_veic);
     novo_veic->prox = list_veic;
     list_veic = novo_veic;
@@ -60,7 +56,7 @@ void imprime_veiculos(lista_veiculo *list_veic)
 
 void imprime_veic(dadosVeiculo veic)
 {
-    printf("\tMarca: %s\n\tModelo: %s\n\tAno de Fabricacao: %s\n\tPlaca: %s\n\tKm atual: %d km\n\tValor da diaria: R$%.2f\n", veic.marca,
+    printf("\tMarca: %s\n\tModelo: %s\n\tAno de Fabricacao: %d\n\tPlaca: %s\n\tKm atual: %d km\n\tValor da diaria: R$%.2f\n", veic.marca,
      veic.modelo, veic.ano_de_fab, veic.placa,veic.km_atual,veic.preco_diaria);
 }
 
