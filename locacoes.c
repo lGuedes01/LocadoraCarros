@@ -55,87 +55,36 @@ int daysBetweenDates(Date date1, Date date2)
 
 void imprime_info_locacao_veic(lista_veiculo *list_veic)
 {
-    lista_veiculo *p;
-    int i;
-    for (p = list_veic, i = 1; p != NULL; p = p->prox, i++)
+    int i=0;
+    lista_veiculo *p = list_veic;
+    while (p != NULL)
     {
-        printf("Carro %d:\n", i);
-        printf("\tmodelo: %s\n\tplaca: %s\n", p->veic.modelo, p->veic.placa);
-    }
-}
-lista_cliente *pega_cliente(lista_cliente *lista_clientes)
-{
-    char *nome_cliente;
-    nome_cliente = (char*)malloc(20*sizeof(char));
-    printf("Informe o CNH do cliente: ");
-    scanf(" %[^\n]s, ",nome_cliente);
-    for (lista_cliente *l = lista_clientes; l != NULL; l = l->prox)
-    {
-        if (strcmp(nome_cliente, l->dados.cnh) == 0)
+        if (p->veic.disponivel)
         {
-            return l;
+            printf("Carro %d:\n", i+1);
+            printf("\tModelo: %s\n",p->veic.modelo);
+            printf("\tPlaca: %s\n", p->veic.placa);
+            i++;
         }
+        p = p->prox;
     }
-    return NULL;
+    
 }
 
-lista_veiculo *pega_veiculo(lista_veiculo *veiculos, lista_veiculo* veiculo_para_alocar)
-{
-    char* placa_veiculo;
-    placa_veiculo = (char*)malloc(20*sizeof(char));
-    printf("Informe a placa do veiculo: ");
-    scanf(" %[^\n]s, ", placa_veiculo);
-    for (veiculo_para_alocar = veiculos; veiculo_para_alocar != NULL; veiculo_para_alocar = veiculo_para_alocar->prox)
-    {
-        if (strcmp(placa_veiculo, veiculo_para_alocar->veic.placa) == 0)
-        {
-            return veiculo_para_alocar;
-        }
-    }
-    return NULL;
-}
 
-ListaLocacao *pega_informacao_locacao(ListaLocacao *locacao_a_realizar,lista_cliente *lista_clientes, lista_veiculo *lista_veic)
-{
-    lista_cliente *cliente = pega_cliente(lista_clientes);
-    if(cliente == NULL)
-    {
-        lista_clientes = add_cliente(lista_clientes);
-        cliente = lista_clientes;
-    }
-    lista_veiculo *veiculo = NULL;
-    veiculo = pega_veiculo(lista_veic, veiculo);
 
-    if (veiculo == NULL)
-    {
-        printf("Veiculo nao encontrado\n");
-        return NULL;
-    }
-    else if(!veiculo->veic.disponivel)
-    {
-        printf("Veiculo nao disponivel\n");
-        return NULL;
-    }
-    else
-    {
-        locacao_a_realizar->locacao_cliente->cl = cliente;
-        locacao_a_realizar->locacao_cliente->vc = veiculo;
-        return locacao_a_realizar;
-    }
-}
-
-bool locacaoAtiva(Locacao *locacao, Date data_atual)
+bool locacaoAtiva(Locacao* locacao)
 {
     return !locacao->vc->veic.disponivel;
 }
 
-void locacoes_ativas(ListaLocacao *lista_locacoes, Date data_atual)
+void locacoes_ativas(ListaLocacao *lista_locacoes)
 {
     printf("Locacoes Ativas:\n");
 
     for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
-        if (locacaoAtiva(locacao->locacao_cliente, data_atual))
+        if (locacaoAtiva(locacao->locacao_cliente))
         {
             printf("Cliente: %s\n", locacao->locacao_cliente->cl->dados.nome);
             printf("Modelo do veiculo: %s\n", locacao->locacao_cliente->vc->veic.modelo);
@@ -148,31 +97,84 @@ void locacoes_ativas(ListaLocacao *lista_locacoes, Date data_atual)
     }
 }
 
-ListaLocacao *locar_veiculo(ListaLocacao *l, ListaLocacao *lista_locacao, Date data_atual)
+lista_veiculo* veiculo_desejado(lista_veiculo* l)
 {
-    if (l == NULL)
+    char placa[20];
+    printf("Digite a placa do veiculo que deseja locar: ");
+    scanf( " %[^\n]s", placa);
+    lista_veiculo* p;
+    for (p = l; p != NULL; p = p->prox)
     {
-        printf("Falha ao realizar a locacao!\n");
-        return lista_locacao;
+        if (strcmp(placa, p->veic.placa) == 0)
+        {
+            return p;
+        }
+        
     }
-    l->locacao_cliente->vc->veic.disponivel = false;
-    l->locacao_cliente->data_retirada = data_atual;
-    l->locacao_cliente->data_devolucao = pega_data("de devolucao"); // 
-    l->prox = lista_locacao;
-    lista_locacao = l;
-    return lista_locacao;
+    return p;
+    
 }
+
+lista_cliente* cliente_desejado(lista_cliente* l)
+{
+    char cnh[20];
+    printf("Digite o CNH do cliente: ");
+    scanf( " %[^\n]s", cnh);
+    lista_cliente* p;
+    for (p = l; p != NULL; p = p->prox)
+    {
+        if (strcmp(cnh, p->dados.cnh) == 0)
+        {
+            return p;
+        }
+    }
+    return p;
+}
+
+ListaLocacao* pega_informacao_locacao(ListaLocacao* nova_locacao, lista_veiculo* vl, lista_cliente* cl, Date data_atual)
+{
+    lista_veiculo* vc;
+    vc = veiculo_desejado(vl);
+    nova_locacao->locacao_cliente->vc = vc;
+    lista_cliente* cli;
+    cli = cliente_desejado(cl);
+    nova_locacao->locacao_cliente->cl = cli;
+    if (nova_locacao->locacao_cliente->vc == NULL)
+    {
+        printf("Veiculo nao encontrado\n");
+        return NULL;
+    }
+    else if (!nova_locacao->locacao_cliente->vc->veic.disponivel)
+    {
+        printf("Veiculo nao disponivel\n");
+        return NULL;
+    }
+    else if(nova_locacao->locacao_cliente->cl == NULL)
+    {
+        printf("O cliente procurado nao esta na lista. Adicione-o depois tente novamente\n");
+        return NULL;
+    }
+    nova_locacao->locacao_cliente->data_retirada = data_atual;
+    nova_locacao->locacao_cliente->data_devolucao = pega_data("devolucao");
+    nova_locacao->locacao_cliente->valor_pago = 0;
+    nova_locacao->locacao_cliente->vc->veic.disponivel = false;
+    return nova_locacao;
+}
+
+
 
 
 ListaLocacao *realizar_locacao(lista_veiculo *lista_veic, lista_cliente *lista_cli, ListaLocacao *lista_locacao, Date data_atual)
 {
     imprime_info_locacao_veic(lista_veic);
-
-    ListaLocacao *l;
-    l = pega_informacao_locacao(l,lista_cli, lista_veic);
-
-    lista_locacao = locar_veiculo(l, lista_locacao, data_atual);
-
+    ListaLocacao* nova_locacao;
+    nova_locacao = (ListaLocacao*)malloc(sizeof(ListaLocacao));
+    nova_locacao = pega_informacao_locacao(nova_locacao, lista_veic, lista_cli, data_atual);
+    if (nova_locacao != NULL)
+    {
+        nova_locacao->prox = lista_locacao;
+        lista_locacao = nova_locacao;
+    }
     return lista_locacao;
 }
 
@@ -269,10 +271,10 @@ void listar_locacoes(ListaLocacao *lista_locacoes)
     }
 }
 
-void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes)
+void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, lista_cliente* cl)
 {
     lista_cliente* cliente;
-    cliente = pega_cliente(cliente);
+    cliente = cliente_desejado(cl);
 
     for (ListaLocacao* l = lista_locacoes ; l!=NULL ; l = l->prox )
     {

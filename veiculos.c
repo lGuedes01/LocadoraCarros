@@ -29,9 +29,9 @@ lista_veiculo *pega_info_veic(lista_veiculo *veiculo)
     printf("Placa:");
     scanf(" %[^\n]s", veiculo->veic.placa);
     printf("KMs rodados:");
-    scanf(" %d", &veiculo->veic.km_atual);
+    scanf("%d", &veiculo->veic.km_atual);
     printf("Preco da diaria:");
-    scanf(" %f", &veiculo->veic.preco_diaria);
+    scanf("%f", &veiculo->veic.preco_diaria);
     veiculo->veic.disponivel = true;
     return veiculo;
 }
@@ -40,7 +40,7 @@ lista_veiculo *add_veic(lista_veiculo *list_veic)
 {
     printf("ADICIONANDO VEICULO: \n");
     lista_veiculo *novo_veic;
-    novo_veic = aloca_veic();
+    novo_veic = (lista_veiculo *)malloc(sizeof(lista_veiculo));
     novo_veic = pega_info_veic(novo_veic);
     novo_veic->prox = list_veic;
     list_veic = novo_veic;

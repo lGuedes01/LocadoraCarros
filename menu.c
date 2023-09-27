@@ -77,10 +77,10 @@ void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLoc
             listar_locacoes(lista_locacoes);
             break;
         case 8:
-            locacoes_ativas(lista_locacoes, data_atual);
+            locacoes_ativas(lista_locacoes);
             break;
         case 9:
-            locacoes_realizadas_por_um_cliente(lista_locacoes);
+            locacoes_realizadas_por_um_cliente(lista_locacoes, lista_clientes);
             break;
         case 10:
             faturamento_mensal(lista_locacoes);
