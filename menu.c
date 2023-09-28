@@ -20,6 +20,7 @@ void imprime_menu()
            "10 - Faturamento Mensal da Locadora\n"
            "11 - Os Tres Veiculos Mais Rodados\n"
            "12 - Placa e Modelo dos Veiculos nao Locados\n"
+           "-1 - Sair\n"
            "-----------------------------------------------\n");
 }
 
@@ -54,7 +55,7 @@ void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocac
     do
     {
         imprime_menu();
-        int opcao = pega_opcao();
+        opcao = pega_opcao();
         switch (opcao)
         {
         case 1:
@@ -92,6 +93,9 @@ void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocac
             break;
         case 12:
             listarVeicDisp(lista_veiculos);
+            break;
+        case -1:
+            printf("Obrigado por usar o sistema!\n");
             break;
         default:
             break;
