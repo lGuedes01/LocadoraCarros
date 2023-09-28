@@ -16,11 +16,12 @@ typedef struct date Date;
 
 struct locacao
 {
-    lista_cliente *cl;
-    lista_veiculo *vc;
+    ListaCliente *cl;
+    ListaVeiculo *vc;
     float valor_pago;
     Date data_retirada;
     Date data_devolucao;
+    bool locacao_ativa;
 };
 typedef struct locacao Locacao;
 
@@ -34,19 +35,19 @@ typedef struct listaLocacao ListaLocacao;
 ListaLocacao *cria_lista_locacao();
 ListaLocacao *aloca_lista_locacao();
 int daysBetweenDates(Date date1, Date date2);
-void imprime_info_locacao_veic(lista_veiculo *list_veic);
-lista_cliente *cliente_desejado(lista_cliente *lista_clientes);
-lista_veiculo *veiculo_desejado(lista_veiculo *veiculos);
-ListaLocacao *pega_informacao_locacao(ListaLocacao *locacao_a_realizar, lista_veiculo *lista_veic, lista_cliente *lista_clientes, Date data_atual);
+void imprime_info_locacao_veic(ListaVeiculo *list_veic);
+ListaCliente *cliente_desejado(ListaCliente *lista_clientes);
+ListaVeiculo *veiculo_desejado(ListaVeiculo *veiculos);
+ListaLocacao *pega_informacao_locacao(ListaLocacao *locacao_a_realizar, ListaVeiculo *lista_veic, ListaCliente *lista_clientes);
 bool locacaoAtiva(Locacao locacao);
 void locacoes_ativas(ListaLocacao *lista_locacoes);
-ListaLocacao *realizar_locacao(lista_veiculo *lista_veic, lista_cliente *lista_cli, ListaLocacao *lista_locacao, Date data_atual);
-void listarVeicDisp(lista_veiculo *veic);
-float calcular_valor_locacao(dadosVeiculo *veiculo, Date data_retirada, Date data_devolucao);
-void registrar_quilometragem(dadosVeiculo *veiculo, int nova_quilometragem);
-void devolver_veiculo(ListaLocacao *lista_locacoes, Date data_atual);
+ListaLocacao *realizar_locacao(ListaVeiculo *lista_veic, ListaCliente *lista_cli, ListaLocacao *lista_locacao);
+void listarVeicDisp(ListaVeiculo *veic);
+float calcular_valor_locacao(ListaLocacao* locacao);
+int registrar_quilometragem(int km_atual, int kms_rodados);
+void devolver_veiculo(ListaLocacao *lista_locacoes);
 void listar_locacoes(ListaLocacao *lista_locacoes);
-void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, lista_cliente* cl);
-float faturamento_mensal(ListaLocacao *lista_locacoes);
+void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaCliente* cl);
+void faturamento_mensal(ListaLocacao *lista_locacoes);
 
 #endif

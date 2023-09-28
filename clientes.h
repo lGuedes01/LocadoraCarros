@@ -3,27 +3,27 @@
 
 #include <stdbool.h>
 
-struct DadosClientes
+struct dados_clientes
 {
     char nome[20];
     char cnh[20];
     char numero[20];
 };
-typedef struct DadosClientes dadosClientes;
+typedef struct dados_clientes DadosClientes;
 
-struct ListaCliente
+struct lista_cliente
 {
-    struct ListaCliente *prox;
-    dadosClientes dados;
+    struct lista_cliente *prox;
+    DadosClientes info;
 };
-typedef struct ListaCliente lista_cliente;
+typedef struct lista_cliente ListaCliente;
 
 
-lista_cliente *cria_lista_clientes();
-lista_cliente *aloca_lista_clientes();
-lista_cliente *add_cliente(lista_cliente *client);
-lista_cliente *pega_info_clientes(lista_cliente *cliente);
-void imprimir_clientes(lista_cliente *lista_cli);
-void imprimir_cliente(dadosClientes cliente);
+ListaCliente *cria_lista_clientes();
+ListaCliente *aloca_lista_clientes();
+ListaCliente *add_cliente(ListaCliente *client);
+ListaCliente *pega_info_clientes(ListaCliente *cliente);
+void imprimir_clientes(ListaCliente *lista_cli);
+void imprimir_cliente(DadosClientes cliente);
 
 #endif

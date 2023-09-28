@@ -6,35 +6,35 @@
 
 #include <stdio.h>
 
-lista_cliente *cria_lista_clientes()
+ListaCliente *cria_lista_clientes()
 {
     return NULL;
 }
 
-lista_cliente *aloca_lista_clientes()
+ListaCliente *aloca_lista_clientes()
 {
 
-    lista_cliente *cliente;
-    cliente = (lista_cliente *)malloc(sizeof(lista_cliente));
+    ListaCliente *cliente;
+    cliente = (ListaCliente *)malloc(sizeof(ListaCliente));
     return cliente;
 }
 
-lista_cliente *pega_info_clientes(lista_cliente* cliente)
+ListaCliente *pega_info_clientes(ListaCliente* cliente)
 {
     printf("Nome: ");
-    scanf(" %[^\n]s", cliente->dados.nome);
+    scanf(" %[^\n]s", cliente->info.nome);
     printf("CNH: ");
-    scanf(" %[^\n]s", cliente->dados.cnh);
+    scanf(" %[^\n]s", cliente->info.cnh);
     printf("Numero de Telefone: ");
-    scanf(" %[^\n]s", cliente->dados.numero);
+    scanf(" %[^\n]s", cliente->info.numero);
     return cliente;
 }
 
-lista_cliente* add_cliente(lista_cliente *list_client)
+ListaCliente* add_cliente(ListaCliente *list_client)
 {
 
     printf("CRIANDO CLIENTE:\n");
-    lista_cliente *novo_cliente;
+    ListaCliente *novo_cliente;
     novo_cliente = aloca_lista_clientes();
     novo_cliente = pega_info_clientes(novo_cliente);
     novo_cliente->prox = list_client;
@@ -42,18 +42,18 @@ lista_cliente* add_cliente(lista_cliente *list_client)
     return list_client;
 }
 
-void imprimir_clientes(lista_cliente *lista_cli)
+void imprimir_clientes(ListaCliente *lista_cli)
 {
-    lista_cliente *cliente;
+    ListaCliente *cliente;
     int i;
     for (cliente = lista_cli, i = 1; cliente != NULL; cliente = cliente->prox, i++)
     {
         printf("Cliente %d:\n", i);
-        imprimir_cliente(cliente->dados);
+        imprimir_cliente(cliente->info);
     }
 }
 
-void imprimir_cliente(dadosClientes cliente)
+void imprimir_cliente(DadosClientes cliente)
 {
     printf("\tNome: %s\n\tCNH: %s\n\tNumero de Telefone: %s\n", cliente.nome,
         cliente.cnh, cliente.numero);

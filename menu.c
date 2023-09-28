@@ -46,7 +46,7 @@ Date pega_data(char* termo)
     return data;
 }
 
-void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLocacao *lista_locacoes, Date data_atual)
+void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocacao *lista_locacoes)
 {
     int opcao = 0;
     do
@@ -68,10 +68,10 @@ void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLoc
             imprimir_clientes(lista_clientes);
             break;
         case 5:
-            lista_locacoes = realizar_locacao(lista_veiculos, lista_clientes, lista_locacoes, data_atual);
+            lista_locacoes = realizar_locacao(lista_veiculos, lista_clientes, lista_locacoes);
             break;
         case 6:
-            devolver_veiculo(lista_locacoes, data_atual);
+            devolver_veiculo(lista_locacoes);
             break;
         case 7:
             listar_locacoes(lista_locacoes);

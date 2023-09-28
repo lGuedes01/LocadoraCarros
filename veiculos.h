@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-struct DadosVeiculo
+struct dados_veic
 {
     char placa[10];
     char marca[20];
@@ -13,21 +13,21 @@ struct DadosVeiculo
     float preco_diaria;
     bool disponivel;
 };
-typedef struct DadosVeiculo dadosVeiculo;
+typedef struct dados_veic DadosVeic;
 
-struct ListaVeiculo
+struct lista_veiculo
 {
-    struct ListaVeiculo *prox;
-    dadosVeiculo veic;
+    struct lista_veiculo *prox;
+    DadosVeic info;
 };
-typedef struct ListaVeiculo lista_veiculo;
+typedef struct lista_veiculo ListaVeiculo;
 
-lista_veiculo *cria_lista_veic();
-lista_veiculo *aloca_veic();
-lista_veiculo *pega_info_veic(lista_veiculo *veiculo);
-lista_veiculo *add_veic(lista_veiculo *list_veic);
-void imprime_veiculos(lista_veiculo *list_veic);
-void imprime_veic(dadosVeiculo veic);
-void top3MaisRodados(lista_veiculo *list_veic);
+ListaVeiculo *cria_lista_veic();
+ListaVeiculo *aloca_veic();
+ListaVeiculo *pega_info_veic(ListaVeiculo *veiculo);
+ListaVeiculo *add_veic(ListaVeiculo *list_veic);
+void imprime_veiculos(ListaVeiculo *list_veic);
+void imprime_veic(DadosVeic veic);
+void top3MaisRodados(ListaVeiculo *list_veic);
 
 #endif
