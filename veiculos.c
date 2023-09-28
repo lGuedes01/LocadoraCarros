@@ -101,6 +101,6 @@ void top3MaisRodados(ListaVeiculo *list_veic)
     for (int i = 0; i < 3; i++)
     {
         if (vet_veic[i] != NULL)
-            printf("top %d: Placa: %s; Km: %d\n", i + 1, vet_veic[i]->info.placa, vet[i]);
+            printf("Top %d: Placa: %s; Km: %d\n", i + 1, vet_veic[i]->info.placa, vet[i]);
     }
 }
