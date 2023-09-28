@@ -34,7 +34,7 @@ ListaVeiculo *pega_info_veic(ListaVeiculo *veiculo)
 
 ListaVeiculo *add_veic(ListaVeiculo *list_veic)
 {
-    printf("ADICIONANDO VEICULO: \n");
+    printf("-----Adicionando Veiculo-----\n");
     ListaVeiculo *novo_veic;
     novo_veic = aloca_veic();
     novo_veic = pega_info_veic(novo_veic);

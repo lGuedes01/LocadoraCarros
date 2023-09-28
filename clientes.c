@@ -33,7 +33,7 @@ ListaCliente *pega_info_clientes(ListaCliente *cliente)
 ListaCliente *add_cliente(ListaCliente *list_client)
 {
 
-    printf("CRIANDO CLIENTE:\n");
+    printf("-----Adicionando Cliente-----\n");
     ListaCliente *novo_cliente;
     novo_cliente = aloca_lista_clientes();
     novo_cliente = pega_info_clientes(novo_cliente);
