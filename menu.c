@@ -49,6 +49,15 @@ Date pega_data(char *termo)
     return data;
 }
 
+Date pega_mes()
+{
+    Date data;
+    printf("Digite o mes que deseja verificar o faturamento(mm/aaaa): ");
+    scanf("%d/%d", &data.month, &data.year);
+
+    return data;
+}
+
 void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocacao *lista_locacoes)
 {
     int opcao = 0;

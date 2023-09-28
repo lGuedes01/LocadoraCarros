@@ -270,9 +270,16 @@ void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaClien
 void faturamento_mensal(ListaLocacao *lista_locacoes)
 {
     float faturamento = 0;
+    Date mes_faturamento = pega_mes();
+
     for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
-        faturamento = faturamento + locacao->locacao_cliente.valor_pago;
+        if (mes_faturamento.month == locacao->locacao_cliente.data_devolucao.month &&
+            mes_faturamento.year == locacao->locacao_cliente.data_devolucao.year)
+        {
+            faturamento = faturamento + locacao->locacao_cliente.valor_pago;
+        }
     }
+
     printf("Faturamento mensal: R$%.2f\n", faturamento);
 }
