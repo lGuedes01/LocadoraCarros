@@ -2,102 +2,105 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-lista_veiculo *cria_lista_veic()
+ListaVeiculo *cria_lista_veic()
 {
     return NULL;
 }
 
-lista_veiculo *aloca_veic()
+ListaVeiculo *aloca_veic()
 {
-    lista_veiculo *veic;
-    veic = (lista_veiculo *)malloc(sizeof(lista_veiculo));
+    ListaVeiculo *veic;
+    veic = (ListaVeiculo *)malloc(sizeof(ListaVeiculo));
     return veic;
 }
 
-lista_veiculo *pega_info_veic(lista_veiculo *veiculo)
+ListaVeiculo *pega_info_veic(ListaVeiculo *veiculo)
 {
-    veiculo->veic.placa = (char *)malloc(20 * sizeof(char));
-    printf("placa:");
-    scanf(" %[^\n]s", veiculo->veic.placa);
-    veiculo->veic.marca = (char *)malloc(20 * sizeof(char));
-    printf("marca:");
-    scanf(" %[^\n]s", veiculo->veic.marca);
-    veiculo->veic.modelo = (char *)malloc(20 * sizeof(char));
-    printf("modelo:");
-    scanf(" %[^\n]s", veiculo->veic.modelo);
-    veiculo->veic.ano_de_fab = (char *)malloc(20 * sizeof(char));
-    printf("ano de fabricacao:");
-    scanf(" %[^\n]s", veiculo->veic.ano_de_fab);
+    printf("Marca:");
+    scanf(" %[^\n]s", veiculo->info.marca);
+    printf("Modelo:");
+    scanf(" %[^\n]s", veiculo->info.modelo);
+    printf("Ano de fabricacao:");
+    scanf("%d", &veiculo->info.ano_de_fab);
+    printf("Placa:");
+    scanf(" %[^\n]s", veiculo->info.placa);
+    printf("KMs rodados:");
+    scanf("%d", &veiculo->info.km_atual);
+    printf("Preco da diaria:");
+    scanf("%f", &veiculo->info.preco_diaria);
+    veiculo->info.disponivel = true;
     return veiculo;
 }
 
-lista_veiculo *ultimo(lista_veiculo *list_veic)
+ListaVeiculo *add_veic(ListaVeiculo *list_veic)
 {
-    lista_veiculo *p;
-    for (p = list_veic; p->prox != NULL; p = p->prox)
-    {
-    }
-    return p;
-}
-
-lista_veiculo *add_veic(lista_veiculo *list_veic)
-{
-    lista_veiculo *novo_veic;
+    printf("ADICIONANDO VEICULO: \n");
+    ListaVeiculo *novo_veic;
     novo_veic = aloca_veic();
     novo_veic = pega_info_veic(novo_veic);
-    novo_veic->ant = NULL;
     novo_veic->prox = list_veic;
-    if (list_veic != NULL)
-        list_veic->ant = novo_veic;
-    return novo_veic;
+    list_veic = novo_veic;
+    return list_veic;
 }
 
-void imprime_veic(lista_veiculo *list_veic)
+void imprime_veiculos(ListaVeiculo *list_veic)
 {
-    lista_veiculo *p;
-    int i;
-    for (p = list_veic, i = 1; p != NULL; p = p->prox, i++)
+    ListaVeiculo *p;
+    if (list_veic == NULL)
     {
-        printf("Carro %d:\n", i);
-        printf("\tmarca: %s\n\tmodelo: %s\n\tplaca: %s\n\tano de fabricacao: %s\n", p->veic.marca, p->veic.modelo, p->veic.placa, p->veic.ano_de_fab);
+        printf("Nao existem veiculos cadastrados!\n");
+    }
+    else
+    {
+        printf("---------------Imprimindo Veiculos---------------\n");
+        int i;
+        for (p = list_veic, i = 1; p != NULL; p = p->prox, i++)
+        {
+            printf("Carro %d:\n", i);
+            imprime_veic(p->info);
+        }
+        printf("------------Fim da Lista de Veiculos-------------\n");
     }
 }
 
-void top3MaisRodados(lista_veiculo *list_veic)
+void imprime_veic(DadosVeic veic)
+{
+    printf("\tMarca: %s\n\tModelo: %s\n\tAno de Fabricacao: %d\n\tPlaca: %s\n\tKm atual: %d km\n\tValor da diaria: R$%.2f\n", veic.marca,
+           veic.modelo, veic.ano_de_fab, veic.placa, veic.km_atual, veic.preco_diaria);
+}
+
+void top3MaisRodados(ListaVeiculo *list_veic)
 {
 
-    lista_veiculo *p;
-    int i;
+    ListaVeiculo *p;
     int vet[3] = {0, 0, 0};
-    lista_veiculo *vet_veic[3];
-    for (i = 1, p = list_veic; p != NULL; p = p->prox, i++)
+    ListaVeiculo *vet_veic[3];
+    for (int i = 0; i < 3; i++)
+        vet_veic[i] = NULL;
+    for (p = list_veic; p != NULL; p = p->prox)
     {
-        int km = p->veic.km_atual;
-        for (int j = 0; j < 3; j++)
+        int km = p->info.km_atual;
+        for (int i = 0; i < 3; i++)
         {
-            if (km > vet[j])
+            if (km >= vet[i])
             {
-                printf("%d %d %d\n", km, vet[j], j);
-                if (j == 2)
+                if (i != 2)
                 {
-                    vet[j] = km;
-                    vet_veic[j] = p;
-                }
-                else
-                {
-                    for (int k = 2; k > j; k--)
+                    for (int j = 2; j > i; j--)
                     {
-                        vet[k] = vet[k - 1];
+                        vet[j] = vet[j - 1];
+                        vet_veic[j] = vet_veic[j - 1];
                     }
-                    vet[j] = km;
-                    vet_veic[j] = p;
                 }
+                vet[i] = km;
+                vet_veic[i] = p;
                 break;
             }
         }
     }
-    for (int j = 0; j < 3; j++)
+    for (int i = 0; i < 3; i++)
     {
-        printf("top %d: placa: %s; km: %d\n", j + 1, vet_veic[j]->veic.placa, vet[j]);
+        if (vet_veic[i] != NULL)
+            printf("top %d: Placa: %s; Km: %d\n", i + 1, vet_veic[i]->info.placa, vet[i]);
     }
 }

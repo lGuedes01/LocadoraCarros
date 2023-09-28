@@ -2,39 +2,43 @@
 #include "clientes.h"
 #include "veiculos.h"
 #include "locacoes.h"
+#include "menu.h"
 
 void imprime_menu()
 {
-    printf("1 - Incluir Veículos\n"
-           "2 - Listar Veículos\n"
+    printf("\n"
+           "-----------------------------------------------\n"
+           "1 - Incluir Veiculos\n"
+           "2 - Listar Veiculos\n"
            "3 - Incluir Clientes\n"
            "4 - Listar Clientes\n"
-           "5 - Realizar Locação\n"
-           "6 - Devolver Veículo\n"
-           "7 - Listar Locações\n"
-           "8 - Locações Ativas\n"
-           "9 - Locações Realizadas Por Um Cliente\n"
+           "5 - Realizar Locacao\n"
+           "6 - Devolver Veiculo\n"
+           "7 - Listar Locacoes\n"
+           "8 - Locacoes Ativas\n"
+           "9 - Locacoes Realizadas Por Um Cliente\n"
            "10 - Faturamento Mensal da Locadora\n"
-           "11 - Os Três Veículos Mais Rodados\n"
-           "12 - Placa e Modelo dos Veículos não Locados\n");
+           "11 - Os Tres Veiculos Mais Rodados\n"
+           "12 - Placa e Modelo dos Veiculos nao Locados\n"
+           "-----------------------------------------------\n");
 }
 
 int pega_opcao()
 {
     int opcao;
-    printf("Digite a opção que deseja acessar!");
+    printf("Digite a opcao que deseja acessar: ");
     do
     {
         scanf("%d", &opcao);
         if (opcao < -1 && opcao > 12)
         {
-            printf("Digite uma opção válida!");
+            printf("Digite uma opcao valida!");
         }
     } while (opcao < -1 && opcao > 12);
     return opcao;
 }
 
-Date pega_data(char termo)
+Date pega_data(char *termo)
 {
     Date data;
 
@@ -44,7 +48,7 @@ Date pega_data(char termo)
     return data;
 }
 
-void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLocacao *lista_locacoes, Date data_atual)
+void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocacao *lista_locacoes)
 {
     int opcao = 0;
     do
@@ -57,7 +61,7 @@ void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLoc
             lista_veiculos = add_veic(lista_veiculos);
             break;
         case 2:
-            imprime_veic(lista_veiculos);
+            imprime_veiculos(lista_veiculos);
             break;
         case 3:
             lista_clientes = add_cliente(lista_clientes);
@@ -66,19 +70,19 @@ void menu(lista_cliente *lista_clientes, lista_veiculo *lista_veiculos, ListaLoc
             imprimir_clientes(lista_clientes);
             break;
         case 5:
-            lista_locacoes = realizar_locacao(lista_veiculos, lista_clientes, lista_locacoes, data_atual);
+            lista_locacoes = realizar_locacao(lista_veiculos, lista_clientes, lista_locacoes);
             break;
         case 6:
-            lista_locacoes = devolver_veiculo(lista_veiculos, lista_clientes, lista_locacoes, data_atual);
+            devolver_veiculo(lista_locacoes);
             break;
         case 7:
             listar_locacoes(lista_locacoes);
             break;
         case 8:
-            locacoes_ativas(lista_locacoes, data_atual);
+            locacoes_ativas(lista_locacoes);
             break;
         case 9:
-            locacoes_realizadas_por_um_cliente(lista_locacoes);
+            locacoes_realizadas_por_um_cliente(lista_locacoes, lista_clientes);
             break;
         case 10:
             faturamento_mensal(lista_locacoes);
