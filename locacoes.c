@@ -180,6 +180,11 @@ float calcular_valor_locacao(ListaLocacao *locacao)
 
     int dias_locados = daysBetweenDates(locacao->locacao_cliente.data_retirada, locacao->locacao_cliente.data_devolucao);
 
+    if (dias_locados == 0)
+    {
+        dias_locados = 1;
+    }
+
     float valor_total = dias_locados * locacao->locacao_cliente.vc->info.preco_diaria;
 
     return valor_total;
@@ -253,7 +258,7 @@ void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaClien
 
     for (ListaLocacao *l = lista_locacoes; l != NULL; l = l->prox)
     {
-        if (l->locacao_cliente.cl = cliente)
+        if (l->locacao_cliente.cl == cliente)
         {
             imprimir_cliente(l->locacao_cliente.cl->info);
             imprime_veic(l->locacao_cliente.vc->info);
