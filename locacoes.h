@@ -49,5 +49,6 @@ void devolver_veiculo(ListaLocacao *lista_locacoes);
 void listar_locacoes(ListaLocacao *lista_locacoes);
 void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaCliente* cl);
 void faturamento_mensal(ListaLocacao *lista_locacoes);
+bool verifica_data(Date data, ListaLocacao *l, char *placa);
 
 #endif

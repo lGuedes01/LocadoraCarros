@@ -15,6 +15,7 @@ ListaLocacao *aloca_lista_locacao()
 {
     ListaLocacao *locacao;
     locacao = (ListaLocacao *)malloc(sizeof(ListaLocacao));
+
     return locacao;
 }
 
@@ -123,6 +124,20 @@ ListaCliente *cliente_desejado(ListaCliente *l)
     return p;
 }
 
+bool verifica_data(Date data, ListaLocacao *l, char *placa)
+{
+    ListaLocacao *p;
+    for (p = l; p != NULL; p = p->prox)
+    {
+        if (strcmp(placa, p->locacao_cliente.vc->info.placa) == 0)
+        {
+            if (daysBetweenDates(p->locacao_cliente.data_devolucao, data) <= 0)
+                return false;
+        }
+    }
+    return true;
+}
+
 ListaLocacao *pega_informacao_locacao(ListaLocacao *nova_locacao, ListaVeiculo *vl, ListaCliente *cl)
 {
     nova_locacao->locacao_cliente.vc = veiculo_desejado(vl);
@@ -130,19 +145,29 @@ ListaLocacao *pega_informacao_locacao(ListaLocacao *nova_locacao, ListaVeiculo *
     if (nova_locacao->locacao_cliente.vc == NULL)
     {
         printf("Veiculo nao encontrado\n");
+        free(nova_locacao);
         return NULL;
     }
     else if (!nova_locacao->locacao_cliente.vc->info.disponivel)
     {
         printf("Veiculo nao disponivel\n");
+        free(nova_locacao);
         return NULL;
     }
     else if (nova_locacao->locacao_cliente.cl == NULL)
     {
         printf("O cliente procurado nao esta na lista. Adicione-o depois tente novamente\n");
+        free(nova_locacao);
         return NULL;
     }
-    nova_locacao->locacao_cliente.data_retirada = pega_data("retirada");
+    Date data = pega_data("retirada");
+    if (!verifica_data(data, nova_locacao->prox, nova_locacao->locacao_cliente.vc->info.placa))
+    {
+        printf("O veiculo nao pode ser locado nessa data!\n");
+        free(nova_locacao);
+        return NULL;
+    }
+    nova_locacao->locacao_cliente.data_retirada = data;
     nova_locacao->locacao_cliente.locacao_ativa = true;
     nova_locacao->locacao_cliente.valor_pago = 0;
     nova_locacao->locacao_cliente.vc->info.disponivel = false;
@@ -154,10 +179,10 @@ ListaLocacao *realizar_locacao(ListaVeiculo *lista_veic, ListaCliente *lista_cli
     imprime_info_locacao_veic(lista_veic);
     ListaLocacao *nova_locacao;
     nova_locacao = aloca_lista_locacao();
+    nova_locacao->prox = lista_locacao;
     nova_locacao = pega_informacao_locacao(nova_locacao, lista_veic, lista_cli);
     if (nova_locacao != NULL)
     {
-        nova_locacao->prox = lista_locacao;
         lista_locacao = nova_locacao;
     }
     return lista_locacao;
