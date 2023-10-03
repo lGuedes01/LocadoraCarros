@@ -34,7 +34,7 @@ ListaVeiculo *pega_info_veic(ListaVeiculo *veiculo)
 
 ListaVeiculo *add_veic(ListaVeiculo *list_veic)
 {
-    printf("ADICIONANDO VEICULO: \n");
+    printf("-----Adicionando Veiculo-----\n");
     ListaVeiculo *novo_veic;
     novo_veic = aloca_veic();
     novo_veic = pega_info_veic(novo_veic);
@@ -46,18 +46,27 @@ ListaVeiculo *add_veic(ListaVeiculo *list_veic)
 void imprime_veiculos(ListaVeiculo *list_veic)
 {
     ListaVeiculo *p;
-    int i;
-    for (p = list_veic, i = 1; p != NULL; p = p->prox, i++)
+    if (list_veic == NULL)
     {
-        printf("Carro %d:\n", i);
-        imprime_veic(p->info);
+        printf("Nao existem veiculos cadastrados!\n");
+    }
+    else
+    {
+        printf("---------------Imprimindo Veiculos---------------\n");
+        int i;
+        for (p = list_veic, i = 1; p != NULL; p = p->prox, i++)
+        {
+            printf("Carro %d:\n", i);
+            imprime_veic(p->info);
+        }
+        printf("------------Fim da Lista de Veiculos-------------\n");
     }
 }
 
 void imprime_veic(DadosVeic veic)
 {
     printf("\tMarca: %s\n\tModelo: %s\n\tAno de Fabricacao: %d\n\tPlaca: %s\n\tKm atual: %d km\n\tValor da diaria: R$%.2f\n", veic.marca,
-     veic.modelo, veic.ano_de_fab, veic.placa,veic.km_atual,veic.preco_diaria);
+           veic.modelo, veic.ano_de_fab, veic.placa, veic.km_atual, veic.preco_diaria);
 }
 
 void top3MaisRodados(ListaVeiculo *list_veic)
@@ -82,9 +91,9 @@ void top3MaisRodados(ListaVeiculo *list_veic)
                         vet[j] = vet[j - 1];
                         vet_veic[j] = vet_veic[j - 1];
                     }
-                } 
-                    vet[i] = km;
-                    vet_veic[i] = p;
+                }
+                vet[i] = km;
+                vet_veic[i] = p;
                 break;
             }
         }
@@ -92,6 +101,6 @@ void top3MaisRodados(ListaVeiculo *list_veic)
     for (int i = 0; i < 3; i++)
     {
         if (vet_veic[i] != NULL)
-            printf("top %d: Placa: %s; Km: %d\n", i + 1, vet_veic[i]->info.placa, vet[i]);
+            printf("Top %d: Placa: %s; Km: %d\n", i + 1, vet_veic[i]->info.placa, vet[i]);
     }
 }

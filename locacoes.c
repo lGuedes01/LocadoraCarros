@@ -55,23 +55,20 @@ int daysBetweenDates(Date date1, Date date2)
 
 void imprime_info_locacao_veic(ListaVeiculo *list_veic)
 {
-    int i=0;
+    int i = 0;
     ListaVeiculo *p = list_veic;
     while (p != NULL)
     {
         if (p->info.disponivel)
         {
-            printf("Carro %d:\n", i+1);
-            printf("\tModelo: %s\n",p->info.modelo);
+            printf("Carro %d:\n", i + 1);
+            printf("\tModelo: %s\n", p->info.modelo);
             printf("\tPlaca: %s\n", p->info.placa);
             i++;
         }
         p = p->prox;
     }
-    
 }
-
-
 
 bool locacaoAtiva(Locacao locacao)
 {
@@ -81,7 +78,6 @@ bool locacaoAtiva(Locacao locacao)
 void locacoes_ativas(ListaLocacao *lista_locacoes)
 {
     printf("Locacoes Ativas:\n");
-
     for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
         if (locacao->locacao_cliente.locacao_ativa)
@@ -95,30 +91,28 @@ void locacoes_ativas(ListaLocacao *lista_locacoes)
     }
 }
 
-ListaVeiculo* veiculo_desejado(ListaVeiculo* l)
+ListaVeiculo *veiculo_desejado(ListaVeiculo *l)
 {
     char placa[20];
     printf("Digite a placa do veiculo que deseja locar: ");
-    scanf( " %[^\n]s", placa);
-    ListaVeiculo* p;
+    scanf(" %[^\n]s", placa);
+    ListaVeiculo *p;
     for (p = l; p != NULL; p = p->prox)
     {
         if (strcmp(placa, p->info.placa) == 0)
         {
             return p;
         }
-        
     }
     return p;
-    
 }
 
-ListaCliente* cliente_desejado(ListaCliente* l)
+ListaCliente *cliente_desejado(ListaCliente *l)
 {
     char cnh[20];
     printf("Digite o CNH do cliente: ");
-    scanf( " %[^\n]s", cnh);
-    ListaCliente* p;
+    scanf(" %[^\n]s", cnh);
+    ListaCliente *p;
     for (p = l; p != NULL; p = p->prox)
     {
         if (strcmp(cnh, p->info.cnh) == 0)
@@ -129,7 +123,7 @@ ListaCliente* cliente_desejado(ListaCliente* l)
     return p;
 }
 
-ListaLocacao* pega_informacao_locacao(ListaLocacao* nova_locacao, ListaVeiculo* vl, ListaCliente* cl)
+ListaLocacao *pega_informacao_locacao(ListaLocacao *nova_locacao, ListaVeiculo *vl, ListaCliente *cl)
 {
     nova_locacao->locacao_cliente.vc = veiculo_desejado(vl);
     nova_locacao->locacao_cliente.cl = cliente_desejado(cl);
@@ -143,7 +137,7 @@ ListaLocacao* pega_informacao_locacao(ListaLocacao* nova_locacao, ListaVeiculo* 
         printf("Veiculo nao disponivel\n");
         return NULL;
     }
-    else if(nova_locacao->locacao_cliente.cl == NULL)
+    else if (nova_locacao->locacao_cliente.cl == NULL)
     {
         printf("O cliente procurado nao esta na lista. Adicione-o depois tente novamente\n");
         return NULL;
@@ -155,13 +149,10 @@ ListaLocacao* pega_informacao_locacao(ListaLocacao* nova_locacao, ListaVeiculo* 
     return nova_locacao;
 }
 
-
-
-
 ListaLocacao *realizar_locacao(ListaVeiculo *lista_veic, ListaCliente *lista_cli, ListaLocacao *lista_locacao)
 {
     imprime_info_locacao_veic(lista_veic);
-    ListaLocacao* nova_locacao;
+    ListaLocacao *nova_locacao;
     nova_locacao = aloca_lista_locacao();
     nova_locacao = pega_informacao_locacao(nova_locacao, lista_veic, lista_cli);
     if (nova_locacao != NULL)
@@ -184,7 +175,7 @@ void listarVeicDisp(ListaVeiculo *veic)
     }
 }
 
-float calcular_valor_locacao(ListaLocacao* locacao)
+float calcular_valor_locacao(ListaLocacao *locacao)
 {
 
     int dias_locados = daysBetweenDates(locacao->locacao_cliente.data_retirada, locacao->locacao_cliente.data_devolucao);
@@ -203,11 +194,9 @@ void devolver_veiculo(ListaLocacao *lista_locacoes)
 {
     char placa_veiculo[10];
     printf("Informe a placa do veiculo a ser devolvido: ");
-    scanf(" %[^\n]s, ",placa_veiculo);
+    scanf(" %[^\n]s, ", placa_veiculo);
 
-    
-
-    for (ListaLocacao* locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
+    for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
         if (strcmp(placa_veiculo, locacao->locacao_cliente.vc->info.placa) == 0)
         {
@@ -215,7 +204,6 @@ void devolver_veiculo(ListaLocacao *lista_locacoes)
             if (locacao->locacao_cliente.vc->info.disponivel == true)
             {
                 printf("Este veiculo ja esta disponivel.\n");
-                
             }
             else
             {
@@ -252,43 +240,46 @@ void listar_locacoes(ListaLocacao *lista_locacoes)
                locacao->locacao_cliente.data_retirada.month, locacao->locacao_cliente.data_retirada.year);
         if (!locacao->locacao_cliente.locacao_ativa)
             printf("Data de Devolucao: %d/%d/%d\n", locacao->locacao_cliente.data_devolucao.day,
-               locacao->locacao_cliente.data_devolucao.month, locacao->locacao_cliente.data_devolucao.year);
+                   locacao->locacao_cliente.data_devolucao.month, locacao->locacao_cliente.data_devolucao.year);
         printf("Valor pago: %.2f\n", locacao->locacao_cliente.valor_pago);
         printf("\n");
     }
 }
 
-void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaCliente* cl)
+void locacoes_realizadas_por_um_cliente(ListaLocacao *lista_locacoes, ListaCliente *cl)
 {
-    ListaCliente* cliente;
+    ListaCliente *cliente;
     cliente = cliente_desejado(cl);
 
-    for (ListaLocacao* l = lista_locacoes ; l!=NULL ; l = l->prox )
+    for (ListaLocacao *l = lista_locacoes; l != NULL; l = l->prox)
     {
         if (l->locacao_cliente.cl = cliente)
         {
             imprimir_cliente(l->locacao_cliente.cl->info);
             imprime_veic(l->locacao_cliente.vc->info);
             printf("Data de Retirada: %d/%d/%d\n", l->locacao_cliente.data_retirada.day,
-               l->locacao_cliente.data_retirada.month, l->locacao_cliente.data_retirada.year);
+                   l->locacao_cliente.data_retirada.month, l->locacao_cliente.data_retirada.year);
             if (!l->locacao_cliente.locacao_ativa)
                 printf("Data de Devolucao: %d/%d/%d\n", l->locacao_cliente.data_devolucao.day,
-                    l->locacao_cliente.data_devolucao.month, l->locacao_cliente.data_devolucao.year);
+                       l->locacao_cliente.data_devolucao.month, l->locacao_cliente.data_devolucao.year);
             printf("Valor pago: %.2f\n", l->locacao_cliente.valor_pago);
         }
-        
     }
-    
 }
-
 
 void faturamento_mensal(ListaLocacao *lista_locacoes)
 {
     float faturamento = 0;
-    for (ListaLocacao* locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
+    Date mes_faturamento = pega_mes();
+
+    for (ListaLocacao *locacao = lista_locacoes; locacao != NULL; locacao = locacao->prox)
     {
-        faturamento = faturamento + locacao->locacao_cliente.valor_pago;
+        if (mes_faturamento.month == locacao->locacao_cliente.data_devolucao.month &&
+            mes_faturamento.year == locacao->locacao_cliente.data_devolucao.year)
+        {
+            faturamento = faturamento + locacao->locacao_cliente.valor_pago;
+        }
     }
+
     printf("Faturamento mensal: R$%.2f\n", faturamento);
-    
 }

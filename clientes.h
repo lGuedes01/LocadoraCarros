@@ -5,7 +5,7 @@
 
 struct dados_clientes
 {
-    char nome[20];
+    char nome[50];
     char cnh[20];
     char numero[20];
 };
@@ -17,7 +17,6 @@ struct lista_cliente
     DadosClientes info;
 };
 typedef struct lista_cliente ListaCliente;
-
 
 ListaCliente *cria_lista_clientes();
 ListaCliente *aloca_lista_clientes();

@@ -19,7 +19,7 @@ ListaCliente *aloca_lista_clientes()
     return cliente;
 }
 
-ListaCliente *pega_info_clientes(ListaCliente* cliente)
+ListaCliente *pega_info_clientes(ListaCliente *cliente)
 {
     printf("Nome: ");
     scanf(" %[^\n]s", cliente->info.nome);
@@ -30,10 +30,10 @@ ListaCliente *pega_info_clientes(ListaCliente* cliente)
     return cliente;
 }
 
-ListaCliente* add_cliente(ListaCliente *list_client)
+ListaCliente *add_cliente(ListaCliente *list_client)
 {
 
-    printf("CRIANDO CLIENTE:\n");
+    printf("-----Adicionando Cliente-----\n");
     ListaCliente *novo_cliente;
     novo_cliente = aloca_lista_clientes();
     novo_cliente = pega_info_clientes(novo_cliente);
@@ -45,16 +45,26 @@ ListaCliente* add_cliente(ListaCliente *list_client)
 void imprimir_clientes(ListaCliente *lista_cli)
 {
     ListaCliente *cliente;
-    int i;
-    for (cliente = lista_cli, i = 1; cliente != NULL; cliente = cliente->prox, i++)
+
+    if (lista_cli == NULL)
     {
-        printf("Cliente %d:\n", i);
-        imprimir_cliente(cliente->info);
+        printf("Nao existem clientes cadastrados!\n");
+    }
+    else
+    {
+        int i;
+        printf("---------------Imprimindo Clientes---------------\n");
+        for (cliente = lista_cli, i = 1; cliente != NULL; cliente = cliente->prox, i++)
+        {
+            printf("Cliente %d:\n", i);
+            imprimir_cliente(cliente->info);
+        }
+        printf("------------Fim da Lista de Clientes-------------\n");
     }
 }
 
 void imprimir_cliente(DadosClientes cliente)
 {
     printf("\tNome: %s\n\tCNH: %s\n\tNumero de Telefone: %s\n", cliente.nome,
-        cliente.cnh, cliente.numero);
+           cliente.cnh, cliente.numero);
 }

@@ -6,7 +6,8 @@
 
 void imprime_menu()
 {
-    printf("\n\n"
+    printf("\n"
+           "-----------------------------------------------\n"
            "1 - Incluir Veiculos\n"
            "2 - Listar Veiculos\n"
            "3 - Incluir Clientes\n"
@@ -18,7 +19,9 @@ void imprime_menu()
            "9 - Locacoes Realizadas Por Um Cliente\n"
            "10 - Faturamento Mensal da Locadora\n"
            "11 - Os Tres Veiculos Mais Rodados\n"
-           "12 - Placa e Modelo dos Veiculos nao Locados\n\n");
+           "12 - Placa e Modelo dos Veiculos nao Locados\n"
+           "-1 - Sair\n"
+           "-----------------------------------------------\n");
 }
 
 int pega_opcao()
@@ -36,12 +39,21 @@ int pega_opcao()
     return opcao;
 }
 
-Date pega_data(char* termo)
+Date pega_data(char *termo)
 {
     Date data;
 
     printf("Informe a data %s (dd/mm/aaaa): ", termo);
     scanf("%d/%d/%d", &data.day, &data.month, &data.year);
+
+    return data;
+}
+
+Date pega_mes()
+{
+    Date data;
+    printf("Digite o mes que deseja verificar o faturamento(mm/aaaa): ");
+    scanf("%d/%d", &data.month, &data.year);
 
     return data;
 }
@@ -52,7 +64,7 @@ void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocac
     do
     {
         imprime_menu();
-        int opcao = pega_opcao();
+        opcao = pega_opcao();
         switch (opcao)
         {
         case 1:
@@ -91,9 +103,11 @@ void menu(ListaCliente *lista_clientes, ListaVeiculo *lista_veiculos, ListaLocac
         case 12:
             listarVeicDisp(lista_veiculos);
             break;
+        case -1:
+            printf("Obrigado por usar o sistema!\n");
+            break;
         default:
             break;
         }
     } while (opcao != -1);
 }
-
